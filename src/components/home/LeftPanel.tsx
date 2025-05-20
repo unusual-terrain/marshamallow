@@ -13,7 +13,7 @@ export const LeftPanel = () => {
     >
       <img src={logo} alt="Company Logo" style={{ width: 100, height: 100 }} />
 
-      <Typography variant="h5">marshmellows</Typography>
+      <Typography variant="h5">marshmallows</Typography>
 
       <Typography variant="subtitle1">Business Intelligence</Typography>
     </Box>

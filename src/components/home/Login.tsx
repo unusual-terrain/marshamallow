@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useAuth } from "../../services"
+import { processLogin, useAuth } from "../../services"
 import { useState } from "react";
 
 export const Login = () => {
@@ -7,10 +7,14 @@ export const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
+
+    const response = await processLogin(userId, password);
+    console.log("Login response:", response.DisplayName);
     login({
       uid: userId,
       password: password,
+      userData: response
     });
 
     

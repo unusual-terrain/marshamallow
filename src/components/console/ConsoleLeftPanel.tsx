@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import logo from "../../assets/mm.png";
+import { useAuth } from "../../services";
 
 export const ConsoleLeftPanel = () => {
+  const { authData } = useAuth();
   return (
     <Box
       display="flex"
@@ -16,7 +18,7 @@ export const ConsoleLeftPanel = () => {
 
         <Box display="flex" flexDirection="column">
           <Typography variant="h5" fontWeight="bold" color="white">
-            marshmellows
+            marshmallows
           </Typography>
 
           <Typography variant="caption" color="white" mt={0.5}>
@@ -24,13 +26,22 @@ export const ConsoleLeftPanel = () => {
           </Typography>
         </Box>
       </Box>
-      <Box textAlign="center">
-      <Typography variant="h5" color="white" mt={2}>
-          Oracle Application Cloud
+      <Box textAlign="start">
+        <Typography variant="body2" color="white" mt={0.5}>
+          connected to : Oracle HCM Cloud
         </Typography>
-        <Typography variant="body2" color="white" mt={2}>
-          © 2025 Antzlab Technology Services Pvt Ltd. All rights reserved.
+        <Typography variant="body2" color="white" mt={0.5}>
+          {"connected user: " +
+            authData?.userData.DisplayName +
+            " | " +
+            authData?.userData.PersonNumber}
         </Typography>
+        <Box mt={4} /> {/* Blank space */}
+        <Box textAlign="center">
+          <Typography variant="caption" color="white" mt={2}>
+            © 2025 Antzlab Technology Services Pvt Ltd. All rights reserved.
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

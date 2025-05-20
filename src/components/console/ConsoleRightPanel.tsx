@@ -33,8 +33,8 @@ export const ConsoleRightPanel = () => {
         sx={{
           flexGrow: 1,
           overflowY: "auto",
-          px: 2,
-          pt: 2,
+          px: 1,
+          pt: 1,
         }}
       >
         <ContentArea components={components} />

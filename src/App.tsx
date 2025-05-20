@@ -1,10 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
-import { Marshmellow } from "./routes";
+import { Marshmallow } from "./routes";
 
 function App() {
   return (
     <BrowserRouter>
-      <Marshmellow />
+      <Marshmallow />
     </BrowserRouter>
   )
 }

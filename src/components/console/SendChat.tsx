@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-import { type ComponentType, type DynamicComponent, processQuery } from "../../services";
+import {
+  type ComponentType,
+  type DynamicComponent,
+  processQuery,
+} from "../../services";
 
 interface SendChatProps {
   components: DynamicComponent[];
@@ -21,15 +25,15 @@ export const SendChat = ({ setComponents }: SendChatProps) => {
   ) => {
     setComponents((prev) => [...prev, { id, type, value, props }]);
   };
-  
+
   const handleSend = async () => {
     if (!inputValue.trim()) return;
     addComponent("query", inputValue);
     setInputValue("");
-  
+
     const loadingId = crypto.randomUUID();
     addComponent("response", "", { loading: true }, loadingId); // Pass loadingId here!
-  
+
     try {
       const response = await processQuery(inputValue);
       setComponents((prev) =>
@@ -39,7 +43,7 @@ export const SendChat = ({ setComponents }: SendChatProps) => {
             : comp
         )
       );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setComponents((prev) =>
         prev.map((comp) =>
@@ -63,21 +67,21 @@ export const SendChat = ({ setComponents }: SendChatProps) => {
 
   return (
     <Box
-    display="flex"
-    flexDirection="column"
-    justifyContent="flex-end"
-    width="100%"
-  >
-    <Box
-      sx={{
-        p: 2,
-        background: "#fff",
-        backdropFilter: "blur(10px)",
-        display: "flex",
-        justifyContent: "center",
-        width: "100%",
-      }}
+      display="flex"
+      flexDirection="column"
+      justifyContent="flex-end"
+      width="100%"
     >
+      <Box
+        sx={{
+          p: 2,
+          background: "#fff",
+          backdropFilter: "blur(10px)",
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
         <Stack
           direction="row"
           alignItems="center"
@@ -95,15 +99,22 @@ export const SendChat = ({ setComponents }: SendChatProps) => {
             fullWidth
             variant="standard"
             placeholder="Ask me your query..."
+            multiline
+            minRows={3}
+           
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyPress}
-            InputProps={{
-              disableUnderline: true,
-              sx: { pr: 1, py: 1.5, fontSize: "1.1rem" },
+            inputProps={{
+              style: {
+                fontSize: "1.1rem",
+                paddingRight: 8, // pr: 1
+                paddingTop: 12, // py: 1.5
+                paddingBottom: 12,
+              },
             }}
           />
-          <IconButton sx={{color: "#2e2e2e"}} onClick={handleSend}>
+          <IconButton sx={{ color: "#2e2e2e" }} onClick={handleSend}>
             <SendIcon />
           </IconButton>
         </Stack>

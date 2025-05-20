@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Console, Home } from "../pages";
 import { useAuth } from "../services";
 
-export const Marshmellow = () => {
+export const Marshmallow = () => {
   const { authData } = useAuth();
   return (
     <Routes>

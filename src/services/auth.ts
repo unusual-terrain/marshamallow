@@ -1,8 +1,10 @@
 import { createContext, useContext } from 'react';
+import type { UserData } from '.';
 
 export type AuthData = {
   uid: string;
   password: string;
+  userData: UserData;
 };
 
 export type AuthContextType = {
