@@ -6,6 +6,7 @@ import {
   type ComponentType,
   type DynamicComponent,
   processQuery,
+  useAuth,
 } from "../../services";
 
 interface SendChatProps {
@@ -14,6 +15,7 @@ interface SendChatProps {
 }
 export const SendChat = ({ setComponents }: SendChatProps) => {
   const [inputValue, setInputValue] = useState("");
+  const { authData } = useAuth();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const addComponent = (
@@ -35,7 +37,7 @@ export const SendChat = ({ setComponents }: SendChatProps) => {
     addComponent("response", "", { loading: true }, loadingId); // Pass loadingId here!
 
     try {
-      const response = await processQuery(inputValue);
+      const response = await processQuery(inputValue, authData);
       setComponents((prev) =>
         prev.map((comp) =>
           comp.id === loadingId

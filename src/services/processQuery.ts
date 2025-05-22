@@ -1,7 +1,21 @@
-export const processQuery = async (query: string): Promise<string> => {
+import type { AuthData } from ".";
+
+export const processQuery = async (
+  query: string,
+  authData: AuthData | null
+): Promise<string> => {
+  if (!authData) {
+    throw new Error("User not authenticated");
+  }
+
+  const encoded = btoa(`${authData.uid}:${authData.password}`);
+
   const response = await fetch("http://localhost:8001/query/", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Basic ${encoded}`,
+    },
     body: JSON.stringify({ query }),
   });
 

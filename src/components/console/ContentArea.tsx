@@ -1,8 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import type { SxProps } from "@mui/system";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import type { DynamicComponent } from "../../services";
+import { useAuth, type DynamicComponent } from "../../services";
 import { MarkdownViewer } from "./MarkdownViewer";
 
 interface ContentAreaProps {
@@ -11,6 +11,8 @@ interface ContentAreaProps {
 }
 
 export const ContentArea = ({ sx, components }: ContentAreaProps) => {
+    const { authData } = useAuth();
+  
   const renderComponent = (component: DynamicComponent) => {
     switch (component.type) {
       case "query":
@@ -35,9 +37,9 @@ export const ContentArea = ({ sx, components }: ContentAreaProps) => {
               {...component.props}
               sx={{
                 backgroundColor: "#fff", // Or a light hex code like #f0f0f0
-                padding: "10px", 
-                borderRadius: "4px", 
-                display: "inline-block", 
+                padding: "10px",
+                borderRadius: "4px",
+                display: "inline-block",
               }}
             >
               {component.value}
@@ -95,8 +97,27 @@ export const ContentArea = ({ sx, components }: ContentAreaProps) => {
       }}
     >
       {/* This is where the content you place inside ContentArea will be rendered */}
-
-      {components.map(renderComponent)}
+{components.length === 0 ? (
+  <Box
+    sx={{
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <Paper elevation={0} sx={{ p: 4, textAlign: "center" }}>
+      <Typography variant="h5" gutterBottom>
+        👋 Welcome! {authData?.userData.DisplayName}
+      </Typography>
+      <Typography variant="body1" color="textSecondary">
+        Waiting for your query.
+      </Typography>
+    </Paper>
+  </Box>
+) : (
+  components.map(renderComponent)
+)}
     </Box>
   );
 };
