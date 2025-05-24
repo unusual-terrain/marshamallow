@@ -1,31 +1,31 @@
-
 import axios from "axios";
 export interface UserData {
-    PersonNumber: string;
-    Username: string;
-    DisplayName: string;
-    PersonId: string;
+  PersonNumber: string;
+  Username: string;
+  DisplayName: string;
+  PersonId: string;
+  AccessToken: string;
 }
 
-
-
-export const processLogin = async (uid: string, password: string): Promise<UserData> => {
+export const processLogin = async (
+  uid: string,
+  password: string
+): Promise<UserData> => {
   try {
-    const response = await axios.get("http://localhost:8002/selfService/getMyDetails", 
+    const token = btoa(`${uid}:${password}`); // Base64 encode username:password
 
+    const response = await axios.post(
+      "http://localhost:8002/auth/login",
+      {}, // Optional body – use `{}` or actual payload if needed
       {
-        auth: {
-          username: uid,
-          password: password
-        },
         headers: {
-          "Content-Type": "application/json"
-        }
+          Authorization: `Basic ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
     return response.data.data;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.response) {
       throw new Error(error.response.data.detail || "Unknown server error");

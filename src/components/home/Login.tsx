@@ -10,7 +10,6 @@ export const Login = () => {
   const handleSignIn = async () => {
 
     const response = await processLogin(userId, password);
-    console.log("Login response:", response.DisplayName);
     login({
       uid: userId,
       password: password,

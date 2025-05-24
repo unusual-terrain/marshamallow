@@ -110,9 +110,7 @@ export const ContentArea = ({ sx, components }: ContentAreaProps) => {
       <Typography variant="h5" gutterBottom>
         👋 Welcome! {authData?.userData.DisplayName}
       </Typography>
-      <Typography variant="body1" color="textSecondary">
-        Waiting for your query.
-      </Typography>
+      
     </Paper>
   </Box>
 ) : (

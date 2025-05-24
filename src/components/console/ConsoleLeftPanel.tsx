@@ -27,21 +27,24 @@ export const ConsoleLeftPanel = () => {
         </Box>
       </Box>
       <Box textAlign="start">
-        <Typography variant="body2" color="white" mt={0.5}>
-          connected to : Oracle HCM Cloud
+        <Typography variant="body2" color="white" mt={0.5} ml={1}>
+          connected to Oracle HCM Cloud
         </Typography>
-        <Typography variant="body2" color="white" mt={0.5}>
-          {"connected user: " +
+        <Typography variant="body2" color="white" mt={0.5} ml={1}>
+          { 
             authData?.userData.DisplayName +
             " | " +
             authData?.userData.PersonNumber}
         </Typography>
         <Box mt={4} /> {/* Blank space */}
         <Box textAlign="center">
-          <Typography variant="caption" color="white" mt={2}>
-            © 2025 Antzlab Technology Services Pvt Ltd. All rights reserved.
-          </Typography>
-        </Box>
+  <Typography variant="caption" color="white" display="block" mt={2}>
+    © 2025 Antzlab Technology Services Pvt Ltd.
+  </Typography>
+  <Typography variant="caption" color="white" display="block" mt={0.25}>
+    All rights reserved.
+  </Typography>
+</Box>
       </Box>
     </Box>
   );

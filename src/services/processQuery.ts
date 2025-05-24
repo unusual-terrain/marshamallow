@@ -1,5 +1,7 @@
 import type { AuthData } from ".";
 
+import axios from "axios";
+
 export const processQuery = async (
   query: string,
   authData: AuthData | null
@@ -8,22 +10,25 @@ export const processQuery = async (
     throw new Error("User not authenticated");
   }
 
-  const encoded = btoa(`${authData.uid}:${authData.password}`);
+  try {
+    const res = await axios.post(
+      "http://localhost:8001/query/",
+      {
+        query: query,
+        accessToken: authData.userData.AccessToken,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  const response = await fetch("http://localhost:8001/query/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Basic ${encoded}`,
-    },
-    body: JSON.stringify({ query }),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.detail || "Unknown server error");
+    return res.data.response;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.detail || "Unknown server error");
+    }
+    throw new Error("Network error or server unreachable");
   }
-
-  return data.response;
 };
